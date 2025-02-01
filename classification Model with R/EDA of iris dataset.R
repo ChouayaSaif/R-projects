@@ -100,11 +100,37 @@ TestingSet <- iris[-TrainingIndex,] # The negative indexing (-TrainingIndex) sel
 Model <- train(Species ~ ., data = TrainingSet, # It predicts the Species variable using all other variables in the TrainingSet.
                method = "svmPloy", # Specifies that a Support Vector Machine (SVM) model with a polynomial kernel (svmPoly) should be used.
                na.action = na.omit, # Tells the model to remove any rows with missing values in the dataset.
-               preProcess = c("scale","center"),
-               trControl = trainControl(method='cv', number=10),
-               yuneGrid - data.frame(degree = 1, scale = 1, C = 1))
+               preProcess = c("scale","center"), # Specifies preprocessing steps. The data will be scaled (standardized) and centered (subtract the mean) before training.
+               trControl = trainControl(method='cv', number=10), # Defines the cross-validation method. It performs 10-fold cross-validation (cv), where the data is split into 10 subsets for training and validation.
+               yuneGrid = data.frame(degree = 1, scale = 1, C = 1)) # Sets the hyperparameter grid for the SVM model. degree is the degree of the polynomial kernel, scale is the scaling factor, and C is the penalty parameter for misclassification. This grid specifies that all hyperparameters should be set to 1.
 
 
+# Build Cross-Validation Model (10-fold CV)
+Model.cv <- train(Species ~ ., data = TrainingSet,
+                  method = "svmPoly",
+                  na.action = na.omit,
+                  preProcess = c("scale", "center"),
+                  trControl = trainControl(method = "cv", number = 10),  # 10-fold CV
+                  tuneGrid = data.frame(degree = 1, scale = 1, C = 1))
 
+# Apply Model for Prediction
+Model.training <- predict(Model, TrainingSet)  # Predictions on training set
+Model.testing <- predict(Model, TestingSet)    # Predictions on testing set
+Model.cv.pred <- predict(Model.cv, TestingSet) # Cross-validation predictions
+
+# Compute Confusion Matrices
+Model.training.confusion <- confusionMatrix(Model.training, TrainingSet$Species)
+Model.testing.confusion <- confusionMatrix(Model.testing, TestingSet$Species)
+Model.cv.confusion <- confusionMatrix(Model.cv.pred, TestingSet$Species)
+
+# Print Confusion Matrices
+print(Model.training.confusion)
+print(Model.testing.confusion)
+print(Model.cv.confusion)
+#Feature importance:
+
+Importance<- varImp(Model)
+plot(Importance)
+plot(Importance, col="red")
 
 
