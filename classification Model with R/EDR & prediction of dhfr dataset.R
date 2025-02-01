@@ -104,9 +104,9 @@ Model <- train(Y ~ ., data = TrainingSet, # It predicts the Species variable usi
 
 
 
-# Save the Model to RDS file
+# Save the Model to  RDS file 
 saveRDS(Model, "Model.rds")
-# Read the model from RDS file
+# Read the model from  RDS file
 Model <- readRDS("Model.rds")
 
 
