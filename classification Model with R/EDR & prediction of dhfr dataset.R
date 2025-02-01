@@ -9,29 +9,24 @@ library(caret) # caret stands Classification and Regression Training. It is a po
 # Phase 1: loading the data
 ##############################
 
-# iris dataset
-data("iris")
-iris <- datasets::iris #access a specific object from a package without loading the entire package.
+# dhfr dataset
+data("dhfr")
+dhfr <- datasets::dhfr #access a specific object from a package without loading the entire package.
 
+View(dhfr)
 
-# Method 2: installing 
-library(RCurl)
-iris <-read.csv(text=getURL("https://github.com/ChouayaSaif/R-projects/blob/26f2567c48d0c99ad39e1c1664347b501a824511/classification%20Model%20with%20R/iris.csv"))
-
-View(iris)
-
-species <- iris$Species
-species
 
 #############################
 # Phase 2: Display statistics
 #############################
-head(iris,4)
-tail(iris,5)
+head(dhfr,4)
+tail(dhfr,5)
 
 
-summary(iris)
-summary(iris$Sepal.Length)
+summary(dhfr)
+summary(dhfr$Y)
+# active inactive 
+#  203      122 ---> imbalanced dataset
 
 # check if dataset contain missing data (na: (Not Available))?
 sum(is.na(iris))
@@ -39,12 +34,12 @@ sum(is.na(iris))
 # skimr() : explands no summary()
 install.packages("skimr")
 library(skimr)
-skim(iris) 
+skim(dhfr) 
 
 
-# Group data by species and then perform skimr
-iris %>%    #  pipe operator (%>%), allows you to chain commands together
-  dplyr::group_by(Species) %>%   # The group_by() function from dplyr creates a grouped data frame.
+# Group data by Y (biological activity)
+dhfr %>%    #  pipe operator (%>%), allows you to chain commands together
+  dplyr::group_by(Y) %>%   # The group_by() function from dplyr creates a grouped data frame.
   skim() 
 
 
@@ -54,28 +49,31 @@ iris %>%    #  pipe operator (%>%), allows you to chain commands together
 #############################
 
 # Panelplots
-plot(iris)
+plot(dhfr)
 plot(iris, col="red")
 
 # Scatter plots
-plot(iris$Sepal.Width, iris$Sepal.Length)
+plot(dhfr$moe2D_zagreb, dhfr$moe2D_weinerPath)
 
-plot(iris$Sepal.Width, iris$Sepal.Length, col="red")
+plot(dhfr$moe2D_zagreb, dhfr$moe2D_weinerPath, col="red")
 
-plot(iris$Sepal.Width, iris$Sepal.Length, col="red",
-     xlab = "Sepal Width", ylab = "Sepal Length") # x and y labels
+plot(dhfr$moe2D_zagreb, dhfr$moe2D_weinerPath, col=dhfr$Y)  # color by Y
+
+
+plot(dhfr$moe2D_zagreb, dhfr$moe2D_weinerPath, col="red",
+     xlab = "moe2D_zagreb", ylab = "moe2D_weinerPath") # x and y labels
 
 
 # Histogram
-hist(iris$Sepal.Width)
-hist(iris$Sepal.Width, col="red")
+hist(dhfr$moe2D_zagreb)
+hist(dhfr$moe2D_zagreb, col="red")
 
 
 # Feature plots
 # a function from the caret package used to create various types of visualizations to understand the relationship between predictor variables (features) and the target variable (response).
 # in this case: boxplot
-featurePlot(x = iris[,1:4], # predictors
-            y = iris$Species, # dependent (response) variable
+featurePlot(x = dhfr[,2:5], # predictors
+            y = dhfr$Y, # dependent (response) variable
             plot = "box",
             strip = strip.custom(par.strip.text=list(cex=.7)),
             scales = list(x=list(relation="free"),
@@ -90,14 +88,14 @@ featurePlot(x = iris[,1:4], # predictors
 set.seed(100)
 
 # Perform stratified random split of the data set
-TrainingIndex <- createDataPartition(iris$Species, p=0.8, list = FALSE) # It generates indices for a stratified random split of the data.
-TrainingSet <- iris[TrainingIndex,]
-TestingSet <- iris[-TrainingIndex,] # The negative indexing (-TrainingIndex) selects the data that was not included in the training set (the remaining 20%).
+TrainingIndex <- createDataPartition(dhfr$Y, p=0.8, list = FALSE) # It generates indices for a stratified random split of the data.
+TrainingSet <- dhfr[TrainingIndex,]
+TestingSet <- dhfr[-TrainingIndex,] # The negative indexing (-TrainingIndex) selects the data that was not included in the training set (the remaining 20%).
 
 
 
 # Build SVM Model: 
-Model <- train(Species ~ ., data = TrainingSet, # It predicts the Species variable using all other variables in the TrainingSet.
+Model <- train(Y ~ ., data = TrainingSet, # It predicts the Species variable using all other variables in the TrainingSet.
                method = "svmPoly", # Specifies that a Support Vector Machine (SVM) model with a polynomial kernel (svmPoly) should be used.
                na.action = na.omit, # Tells the model to remove any rows with missing values in the dataset.
                preProcess = c("scale","center"), # Specifies preprocessing steps. The data will be scaled (standardized) and centered (subtract the mean) before training.
@@ -106,7 +104,7 @@ Model <- train(Species ~ ., data = TrainingSet, # It predicts the Species variab
 
 
 # Build Cross-Validation Model (10-fold CV)
-Model.cv <- train(Species ~ ., data = TrainingSet,
+Model.cv <- train(Y ~ ., data = TrainingSet,
                   method = "svmPoly",
                   na.action = na.omit,
                   preProcess = c("scale", "center"),
@@ -119,9 +117,9 @@ Model.testing <- predict(Model, TestingSet)    # Predictions on testing set
 Model.cv.pred <- predict(Model.cv, TestingSet) # Cross-validation predictions
 
 # Compute Confusion Matrices
-Model.training.confusion <- confusionMatrix(Model.training, TrainingSet$Species)
-Model.testing.confusion <- confusionMatrix(Model.testing, TestingSet$Species)
-Model.cv.confusion <- confusionMatrix(Model.cv.pred, TestingSet$Species)
+Model.training.confusion <- confusionMatrix(Model.training, TrainingSet$Y)
+Model.testing.confusion <- confusionMatrix(Model.testing, TestingSet$Y)
+Model.cv.confusion <- confusionMatrix(Model.cv.pred, TestingSet$Y)
 
 # Print Confusion Matrices
 print(Model.training.confusion)
@@ -131,6 +129,6 @@ print(Model.cv.confusion)
 #Feature importance:
 # Determines how much each feature (e.g., Sepal.Length, Sepal.Width, etc.) contributes to predicting Species.
 Importance<- varImp(Model) # Compute feature importance
-plot(Importance) # Visualize feature importance
+plot(Importance, top=25) # Visualize feature importance
 
 
