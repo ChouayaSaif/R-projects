@@ -50,7 +50,7 @@ dhfr %>%    #  pipe operator (%>%), allows you to chain commands together
 
 # Panelplots
 plot(dhfr)
-plot(iris, col="red")
+plot(dhfr, col="red")
 
 # Scatter plots
 plot(dhfr$moe2D_zagreb, dhfr$moe2D_weinerPath)
@@ -103,6 +103,14 @@ Model <- train(Y ~ ., data = TrainingSet, # It predicts the Species variable usi
                yuneGrid = data.frame(degree = 1, scale = 1, C = 1)) # Sets the hyperparameter grid for the SVM model. degree is the degree of the polynomial kernel, scale is the scaling factor, and C is the penalty parameter for misclassification. This grid specifies that all hyperparameters should be set to 1.
 
 
+
+# Save the Model to RDS file
+saveRDS(Model, "Model.rds")
+# Read the model from RDS file
+Model <- readRDS("Model.rds")
+
+
+
 # Build Cross-Validation Model (10-fold CV)
 Model.cv <- train(Y ~ ., data = TrainingSet,
                   method = "svmPoly",
@@ -129,6 +137,6 @@ print(Model.cv.confusion)
 #Feature importance:
 # Determines how much each feature (e.g., Sepal.Length, Sepal.Width, etc.) contributes to predicting Species.
 Importance<- varImp(Model) # Compute feature importance
-plot(Importance, top=25) # Visualize feature importance
+plot(Importance, top = 25) # Visualize feature importance
 
 
