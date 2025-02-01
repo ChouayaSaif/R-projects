@@ -82,6 +82,29 @@ featurePlot(x = iris[,1:4], # predictors
                           y=list(relation="free")))
 
 
+##############################################################
+#Phase 4: Building a Classification Model (CVM model (polynomial kernel function))
+##############################################################
+
+# To achieve reproducible model: set a fixed seed number
+set.seed(100)
+
+# Perform stratified random split of the data set
+TrainingIndex <- createDataPartition(iris$Species, p=0.8, list = FALSE) # It generates indices for a stratified random split of the data.
+TrainingSet <- iris[TrainingIndex,]
+TestingSet <- iris[-TrainingIndex,] # The negative indexing (-TrainingIndex) selects the data that was not included in the training set (the remaining 20%).
+
+
+
+# Build SVM Model: 
+Model <- train(Species ~ ., data = TrainingSet, # It predicts the Species variable using all other variables in the TrainingSet.
+               method = "svmPloy", # Specifies that a Support Vector Machine (SVM) model with a polynomial kernel (svmPoly) should be used.
+               na.action = na.omit, # Tells the model to remove any rows with missing values in the dataset.
+               preProcess = c("scale","center"),
+               trControl = trainControl(method='cv', number=10),
+               yuneGrid - data.frame(degree = 1, scale = 1, C = 1))
+
+
 
 
 
