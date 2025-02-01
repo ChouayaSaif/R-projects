@@ -1,9 +1,13 @@
 # Importing libraries
 library(datasets)
 # Method 1: using datasets library has iris already in
+install.packages("caret")
+install.packages("ggplot2")
 library(caret) # caret stands Classification and Regression Training. It is a powerful and widely used package for machine learning and statistical modeling
 
-# Phase 1: loading the library
+###############################
+# Phase 1: loading the data
+##############################
 
 # iris dataset
 data("iris")
@@ -12,18 +16,72 @@ iris <- datasets::iris #access a specific object from a package without loading 
 
 # Method 2: installing 
 library(RCurl)
-iris <-read.csv(text=getURL("https://raw.githubusercontent.com/dataprofessor/data/master/iris.csv"))
+iris <-read.csv(text=getURL("https://github.com/ChouayaSaif/R-projects/blob/26f2567c48d0c99ad39e1c1664347b501a824511/classification%20Model%20with%20R/iris.csv"))
 
 View(iris)
 
-# Phase 2:display statistics
+species <- iris$Species
+species
+
+#############################
+# Phase 2: Display statistics
+#############################
+head(iris,4)
+tail(iris,5)
 
 
+summary(iris)
+summary(iris$Sepal.Length)
 
-
-
-
+# check if dataset contain missing data (na: (Not Available))?
 sum(is.na(iris))
+
+# skimr() : explands no summary()
+install.packages("skimr")
+library(skimr)
+skim(iris) 
+
+
+# Group data by species and then perform skimr
+iris %>%    #  pipe operator (%>%), allows you to chain commands together
+  dplyr::group_by(Species) %>%   # The group_by() function from dplyr creates a grouped data frame.
+  skim() 
+
+
+
+#############################
+# Phase 3: Data Visualization
+#############################
+
+# Panelplots
+plot(iris)
+plot(iris, col="red")
+
+# Scatter plots
+plot(iris$Sepal.Width, iris$Sepal.Length)
+
+plot(iris$Sepal.Width, iris$Sepal.Length, col="red")
+
+plot(iris$Sepal.Width, iris$Sepal.Length, col="red",
+     xlab = "Sepal Width", ylab = "Sepal Length") # x and y labels
+
+
+# Histogram
+hist(iris$Sepal.Width)
+hist(iris$Sepal.Width, col="red")
+
+
+# Feature plots
+# a function from the caret package used to create various types of visualizations to understand the relationship between predictor variables (features) and the target variable (response).
+# in this case: boxplot
+featurePlot(x = iris[,1:4], # predictors
+            y = iris$Species, # dependent (response) variable
+            plot = "box",
+            strip = strip.custom(par.strip.text=list(cex=.7)),
+            scales = list(x=list(relation="free"),
+                          y=list(relation="free")))
+
+
 
 
 
