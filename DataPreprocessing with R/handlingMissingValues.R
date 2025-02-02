@@ -17,7 +17,7 @@ View(dhfr)
 
 
 ########################################################
-# Phase 2: Preprocessign data (Handling missing values)
+# Phase 2: Preprocessing data (Handling missing values)
 ########################################################
 
 
