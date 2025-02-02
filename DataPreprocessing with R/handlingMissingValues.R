@@ -21,7 +21,7 @@ View(dhfr)
 ########################################################
 
 
-# 2. check for missing data
+# 2. check for  missing data
 sum(is.na(dhfr))
 
 # 3. if data is clean, randomly introduce NA
