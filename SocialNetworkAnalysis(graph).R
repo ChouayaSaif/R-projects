@@ -11,7 +11,7 @@ plot(g,
 g[]
 
 g1 <- graph(c("Amy", "Ram", "Ram","li","li","Amy","Amy",
-        "li","kate","li"), directed = T)
+              "li","kate","li"), directed = T)
 
 plot(g1,
      vertex.color = "green",
@@ -25,7 +25,7 @@ degree(g1, mode = 'all')
 degree(g1, mode = 'in') # how many arrows coming to each one
 degree(g1, mode = 'out')
 
-diameter(g1, directed=F, weights = NA) # It’s the greatest distance (in terms of the number of edges) you would need to travel to go from one node to another, considering the shortest paths between all pairs of nodes in the graph.
+diameter(g1, directed=F, weights = NA) # It's the greatest distance (in terms of the number of edges) you would need to travel to go from one node to another, considering the shortest paths between all pairs of nodes in the graph.
 edge_density(g1, loops=F) # Edge density is a measure of how many edges are present in a graph compared to the maximum possible number of edges.
 # same result below: ecount: nb of edges, vcount(g1): nb of vertexes
 ecount(g1)/(vcount(g1)*(vcount(g1)-1))
@@ -94,8 +94,8 @@ plot(net,
 
 # Do not Work !!!!!
 # Hub and authorities
-hs <- hub_score(net)$vector # This function calculates the hub scores for the nodes in the graph net. Hub scores measure how influential a node is in terms of pointing to other highly authoritative nodes.
-as <- authority.score(net)$vector # This function calculates the authority scores for the nodes in the graph net. Authority scores measure how authoritative a node is, based on how many good hubs point to it.
+hs <- hub_score(net)$vector
+as <- authority.score(net)$vector
 par(mfrow = c(1, 2)) 
 set.seed(123)
 plot(net,
@@ -114,7 +114,6 @@ plot(net,
      layout = layout_with_fr(net))
 
 # Community Detection: detect groups of density connected nodes
-# This helps group closely connected nodes and visualize the structure of communities
 net <- graph.data.frame(y, directed = F)
 cnet <- cluster_edge_betweenness(net)
 plot(cnet,
