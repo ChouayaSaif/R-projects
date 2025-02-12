@@ -79,3 +79,57 @@ freq <- colSums(as.matrix(dtm))
 # length should be total nb of terms
 length(freq)
 freq
+
+
+
+# create sort order (asc): This simply outputs the ordered indices stored in the variable ord.
+ord <- order(freq, decreasing=TRUE)
+ord
+# inspect Most Frequently occuring terms
+freq[head(ord)]
+
+# inspect least Frequently occuring terms
+freq[tail(ord)]
+
+
+# Remove very frequent and very rare words
+# creates a Document-Term Matrix (DTM) from docs and  removes very rare and very frequent words.
+# wordLengths=c(4, 20): This keeps only words whose lengths are between 4 and 20 characters. Very short words (like "a", "is") and very long words are removed.
+# bounds = list(global = c(3,27)): This filters words based on their document frequency:
+#   --> Words appearing in fewer than 3 documents are removed (very rare words).
+#   --> Words appearing in more than 27 documents are removed (very frequent words).
+dtmr <- DocumentTermMatrix(docs, control=list(wordLengths=c(4, 20), bounds = list(global = c(3,27))))
+
+freqr <- colSums(as.matrix(dtmr))
+freqr
+length(freqr)
+
+ord <- order(freqr, decreasing=TRUE)
+ord
+freqr[head(ord)]
+freqr[tail(ord)]
+# list most frequent terms, lower bound: second arg
+findFreqTerms(dtmr, lowfreq = 4)
+
+
+# Correlations btw words
+findAssocs(dtmr, "analysi", 0.6) # numeric(0): no other word has a correlation of 60% with analysi
+findAssocs(dtmr, "mine", 0.3)
+findAssocs(dtmr, "text", 0.6)
+
+# Histogram : know which term appears more frequently
+wf = data.frame(term=names(freqr), occurences=freqr)
+library(ggplot2)
+p <- ggplot(subset(wf, freqr<100), aes(term, occurences))
+p <- p + geom_bar(stat="identity")
+p <- p + theme(axis.text.x=element_text(angle=45, hjust=1))
+p
+
+# WordCloud
+library(wordcloud)
+library(RColorBrewer)
+set.seed(42)
+# limit words by specifying min freq
+wordcloud(names(freqr),freqr, min.freq=70)
+# add color
+wordcloud(names(freqr), freqr, min.freq=70, colors=brewer.pal(8, "Dark2"))
