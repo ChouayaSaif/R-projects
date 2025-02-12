@@ -1,4 +1,3 @@
-#-------------------------------
 library(tidyverse)  # data wrangling
 library(RSelenium)  # activate Selenium server
 library(rvest)      # web scrape tables
