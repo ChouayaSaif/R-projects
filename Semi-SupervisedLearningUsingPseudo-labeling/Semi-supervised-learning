@@ -1,0 +1,63 @@
+library(tidyverse)
+library(caret)
+library(xgboost)
+library(RSSL)
+library(data.table)
+
+# Load the data
+train <- fread("train.csv")
+test <- fread("test.csv")
+
+# Remove ID column
+train <- train %>% select(-ID)
+test_ids <- test$ID
+test <- test %>% select(-ID)
+
+# Handling missing values (replace with median)
+train[is.na(train)] <- median(train$y, na.rm = TRUE)
+
+# Encoding categorical variables
+train <- train %>% mutate_if(is.character, as.factor)
+test <- test %>% mutate_if(is.character, as.factor)
+
+# Convert categorical variables to numeric
+train <- train %>% mutate_if(is.factor, as.numeric)
+test <- test %>% mutate_if(is.factor, as.numeric)
+
+# Splitting labeled and unlabeled data
+set.seed(123)
+labeled_idx <- createDataPartition(train$y, p = 0.2, list = FALSE)
+labeled_data <- train[labeled_idx, ]
+unlabeled_data <- train[-labeled_idx, ]
+
+# Train an initial XGBoost model on labeled data
+train_matrix <- xgb.DMatrix(data = as.matrix(select(labeled_data, -y)), label = labeled_data$y)
+params <- list(objective = "reg:squarederror", eval_metric = "rmse")
+model <- xgb.train(params, train_matrix, nrounds = 100)
+
+# Predict on unlabeled data
+unlabeled_matrix <- xgb.DMatrix(data = as.matrix(select(unlabeled_data, -y)))
+pseudo_labels <- predict(model, unlabeled_matrix)
+
+# Select confident pseudo-labels
+threshold <- 0.9
+confident_idx <- which(pseudo_labels > quantile(pseudo_labels, threshold) |
+                         pseudo_labels < quantile(pseudo_labels, 1 - threshold))
+new_labeled <- unlabeled_data[confident_idx, ]
+new_labeled$y <- pseudo_labels[confident_idx]
+
+# Merge pseudo-labeled data with labeled data
+labeled_data <- rbind(labeled_data, new_labeled)
+
+# Retrain XGBoost with expanded dataset
+train_matrix <- xgb.DMatrix(data = as.matrix(select(labeled_data, -y)), label = labeled_data$y)
+model <- xgb.train(params, train_matrix, nrounds = 100)
+
+# Predict on test data
+test_matrix <- xgb.DMatrix(data = as.matrix(test))
+test_predictions <- predict(model, test_matrix)
+
+# Create submission file
+submission <- data.frame(ID = test_ids, y = test_predictions)
+write.csv(submission, "submission.csv", row.names = FALSE)
+
