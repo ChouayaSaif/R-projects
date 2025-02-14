@@ -58,6 +58,6 @@ test_matrix <- xgb.DMatrix(data = as.matrix(test))
 test_predictions <- predict(model, test_matrix)
 
 # Create submission file
-submission <- data.frame(ID = test_ids, y = test_predictions)
-write.csv(submission, "submission.csv", row.names = FALSE)
+output <- data.frame(ID = test_ids, y = test_predictions)
+write.csv(output, "output.csv", row.names = FALSE)
 
