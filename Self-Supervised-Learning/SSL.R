@@ -53,7 +53,7 @@ load_mnist_data <- function() {
   return(list(images = train_images, labels = train_labels))
 }
 
-# Load dataset and apply transformations
+# Load dataset and apply  transformations
 train_ds <- load_mnist_data()
 
 
