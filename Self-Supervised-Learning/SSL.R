@@ -47,8 +47,8 @@ load_mnist_data <- function() {
   # Load images as a list (manually or using an image reading library)
   # For simplicity, we will just use an empty list here for now.
   # You should load actual images and labels from the extracted directory.
-  train_images <- list()  # Replace this with actual image loading code
-  train_labels <- list()  # Replace this with actual label loading code
+  train_images <- list() 
+  train_labels <- list()  
   
   return(list(images = train_images, labels = train_labels))
 }
