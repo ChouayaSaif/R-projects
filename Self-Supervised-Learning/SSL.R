@@ -22,7 +22,7 @@ download_mnist_data <- function(url, dest_dir = "./data") {
 }
 
 
-# Define transformations to the MNIST images
+# Define transformations for the MNIST images
 transform_fn <- function(x) {
   x <- torch_tensor(as.array(x), dtype = torch_float()) / 255  # Normalize to [0, 1]
   x <- x$unsqueeze(1)  # Add channel dimension, shape [1, 28, 28]
