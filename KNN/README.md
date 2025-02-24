@@ -31,7 +31,6 @@ install.packages(c("caret", "pROC", "mlbench"))
 We classify student admission based on various features using K-Nearest Neighbors. The dataset is partitioned into a training set (70%) and a test set (30%). We use repeated cross-validation (10-fold, 3 repeats) to train the KNN model and optimize the number of neighbors (k) based on ROC performance.
 
 - Training the Model:
-
 ![alt text](image-8.png)
 ![alt text](image-9.png)
 
@@ -46,12 +45,15 @@ plotting the ROC curve and calculating the area under the curve (AUC) for the be
 
 
 ### 2. Regression (Boston Housing)
+We predict house prices using K-Nearest Neighbors based on various features such as crime rate, property tax rate, etc. Similar to the classification example, we partition the data and tune the model using repeated cross-validation.
 
+- Training the Model:
 ![alt text](image-4.png)
 ![alt text](image-3.png)
 
+- Results:
 ![alt text](image-5.png)
 
+- Evaluating Model Performance:
 ![alt text](image-6.png)
-
 ![alt text](image-7.png)
