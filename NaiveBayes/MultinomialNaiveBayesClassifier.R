@@ -1,4 +1,4 @@
-lu# Naive Bayes
+# Naive Bayes
 
 # Libraries
 library(naivebayes)
