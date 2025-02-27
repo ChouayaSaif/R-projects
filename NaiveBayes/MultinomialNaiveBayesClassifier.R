@@ -1,12 +1,10 @@
 # Naive Bayes
 
-# Libraries
 library(naivebayes)
 library(dplyr)
 library(ggplot2)
 library(psych)
 
-#Read data file
 getwd()
 data <- read.csv('https://raw.githubusercontent.com/bkrai/Statistical-Modeling-and-Graphs-with-R/main/binary.csv')
 
