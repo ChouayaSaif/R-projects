@@ -36,3 +36,13 @@ pacf(rats.ts)
 library(forecast)
 
 forecast::tsdisplay(rats.ts)
+
+library(astsa)
+
+astsa::lag2.plot(rain.ts, NDVI.ts, 12)
+# Creates scatter plots of NDVI.ts (vegetation index) against lagged values of rain.ts (rainfall) for lags 0 to 12.
+
+ccf(rain.ts, NDVI.ts) # Computes and plots the cross-correlation function (CCF) between rain.ts (rainfall) and NDVI.ts (vegetation index).
+# Purpose: Determines if rainfall leads to changes in NDVI and the time delay for this effect.
+
+
