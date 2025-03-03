@@ -13,8 +13,8 @@ abline(h=0.18) # Adds a horizontal reference line at NDVI = 0.18 to visualize th
 
 lag.plot(NDVI.ts, lags=12, do.line=FALSE)
 lag.plot(whitenoise, lags=12, do.line=FALSE)
-# A lag plot is a scatter plot where each point represents the relationship between a time series 
-# value and its lagged (previous) value. It helps us detect patterns, trends, and autocorrelation in the data.
+#A lag plot is a scatter plot where each point represents the relationship between a time series 
+#value and its lagged (previous) value. It helps us detect patterns, trends, and autocorrelation in the data.
 
 
 acf(NDVI.ts)
