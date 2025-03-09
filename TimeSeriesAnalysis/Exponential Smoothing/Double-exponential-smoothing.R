@@ -2,21 +2,11 @@
 install.packages("forecast")
 library(forecast)
 
-# Example data: Monthly sales data with a trend
-sales <- c(200, 210, 220, 230, 240, 250)
+# Create a sample time series data
+google_data <- ts(rnorm(100), start = c(2000, 1), frequency = 12)
 
-# Convert to a time series object
-sales_ts <- ts(sales, frequency = 12)
-
-# Apply Double Exponential Smoothing (Holt's Linear Trend Method)
-holt_model <- holt(sales_ts, alpha = 0.2, beta = 0.1)
-
-# Print the model summary
-print(holt_model)
-
-# Forecast the next 3 months
-forecast_holt <- forecast(holt_model, h = 3)
-print(forecast_holt)
+# Apply the holt function with specified alpha and beta, and forecast 100 steps
+holt_model <- holt(google_data, alpha = 0.9967, beta = 0.0001, h = 100)
 
 # Plot the forecast
-plot(forecast_holt, main = "Double Exponential Smoothing Forecast")
+plot(holt_model)
