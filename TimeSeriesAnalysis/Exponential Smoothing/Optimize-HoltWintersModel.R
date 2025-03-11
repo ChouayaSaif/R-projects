@@ -1,10 +1,9 @@
 # The optimization process involves testing different values of γ (and other parameters like α and β) to find the combination that results in the lowest forecast error.
 
 # This is typically done using algorithms like grid search or maximum likelihood estimation to systematically evaluate different parameter values.
-# Load necessary library
 library(forecast)
 
-# Example time series data with seasonality
+
 sales <- ts(c(200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300, 310,
               220, 230, 240, 250, 260, 270, 280, 290, 300, 310, 320, 330,
               240, 250, 260, 270, 280, 290, 300, 310, 320, 330, 340, 350),
