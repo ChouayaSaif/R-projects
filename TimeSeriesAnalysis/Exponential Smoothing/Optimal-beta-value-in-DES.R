@@ -1,8 +1,6 @@
-# Install and load the forecast package
 install.packages("forecast")
 library(forecast)
 
-# Create a sample time series data (replace this with your actual data)
 set.seed(123)
 google_data <- ts(rnorm(100), start = c(2000, 1), frequency = 12)
 
