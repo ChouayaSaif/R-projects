@@ -1,4 +1,3 @@
-# Install and load the forecast package
 install.packages("forecast")
 library(forecast)
 
