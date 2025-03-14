@@ -1,36 +1,39 @@
-# Load necessary libraries
+# ##########################################################
+# Reference Book: Machine Learning with R by Brett Lantz ###
+############################################################
+
 install.packages("arules")
 install.packages("arulesViz")
 library(arules)
 library(arulesViz)
 
-# Load the Groceries dataset
 data("Groceries")
 
 # Convert the Groceries dataset to a data frame
 groceries_df <- as(Groceries, "data.frame")
-
-# Save the data frame to a CSV file
 write.csv(groceries_df, file = "groceries.csv", row.names = FALSE)
 
 # Read the CSV file into a sparse matrix
 Groceries <- read.transactions("groceries.csv", format = "basket", sep = ",", cols = 2)
 
-
 # Inspect the dataset
 summary(Groceries)
 inspect(Groceries[1:5])
 
-itemFrequency(groceries[, 1:3])
+itemFrequency(Groceries[, 1:3])
 
 # Visualizing item support – item frequency plots
-itemFrequencyPlot(groceries, topN = 10)
+itemFrequencyPlot(Groceries, topN = 10)
 # itemFrequencyPlot(groceries, support = 0.01)
 
-# Convert sparse matrix to a dense matrix
-dense_matrix <- as(groceries, "matrix")
 
-# Output the dense matrix
+# Visualizing transaction data – plotting the sparse matrix
+image(Groceries[1:10])
+image(sample(groceries, 100)) # sampling 100 transactions
+
+
+# Note: u can convert from/to sparse matrix from/to a dense matrix
+dense_matrix <- as(groceries, "matrix")
 print(dense_matrix)
 
 
