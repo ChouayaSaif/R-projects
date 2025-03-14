@@ -1,3 +1,4 @@
+# Load necessary libraries
 install.packages("arules")
 install.packages("arulesViz")
 library(arules)
@@ -22,6 +23,9 @@ inspect(Groceries[1:5])
 
 itemFrequency(groceries[, 1:3])
 
+# Visualizing item support – item frequency plots
+itemFrequencyPlot(groceries, topN = 10)
+# itemFrequencyPlot(groceries, support = 0.01)
 
 # Convert sparse matrix to a dense matrix
 dense_matrix <- as(groceries, "matrix")
