@@ -37,21 +37,34 @@ dense_matrix <- as(groceries, "matrix")
 print(dense_matrix)
 
 
-
+# Training a model with the data
 # Perform market basket analysis using the Apriori algorithm
 # Set minimum support and confidence thresholds
 rules <- apriori(Groceries, parameter = list(support = 0.01, confidence = 0.5, minlen = 2))
 
-# Inspect the generated rules
+# Inspect the association rules
 summary(rules)
-inspect(head(sort(rules, by = "lift"), 10))
-
+inspect(rules)
+inspect(rules[1:3]) # inspect specific rules
+ 
 # Visualize the rules
 plot(rules, method = "graph", engine = "htmlwidget")
 
-# Filter rules for specific items (e.g., whole milk and yogurt)
-milk_yogurt_rules <- subset(rules, subset = items %in% c("whole milk", "yogurt"))
-inspect(milk_yogurt_rules)
 
-# Save the rules to a CSV file for further analysis
+
+# Improving Model performance
+
+# Method 1: sort rules according to different criterias
+inspect(sort(groceryrules, by = "lift", decreasing = FALSE)[1:5]) # Best 5 rules by lift measure
+# Method 2: Taking subsets of association rules
+berryrules <- subset(groceryrules, items %in% "berries")
+inspect(berryrules)
+
+# To share the results of your market basket analysis,
+# Save the association rules to a CSV file or data frame for further analysis
 write(rules, file = "association_rules.csv", sep = ",", quote = TRUE, row.names = FALSE)
+groceryrules_df <- as(groceryrules, "data.frame") # using as() function to convert rules into a dataframe
+str(groceryrules_df)
+
+
+
