@@ -22,10 +22,22 @@ sms_raw <- read.csv("spam.csv", stringsAsFactors = FALSE)
 # step 1: exploring and preparing the data
 
 str(sms_raw)
-# Convert the 'type' column to a factor
+# Rename columns for clarity
+colnames(sms_raw) <- c("type", "message", "X", "X.1", "X.2")
+# Remove empty columns
+sms_raw <- sms_raw[, 1:2]  # Keep only 'type' and 'message' columns
+# Convert 'type' to a factor
 sms_raw$type <- factor(sms_raw$type)
+# Check the structure again
+str(sms_raw)
+str(sms_raw$type)
+table(sms_raw$type)
 
-# Step 2: Create a corpus
+
+
+# Step 2: Data preparation – processing text data for analysis
+
+# Create a corpus
 sms_corpus <- Corpus(VectorSource(sms_raw$text))
 
 # Step 3: Preprocess the text data
