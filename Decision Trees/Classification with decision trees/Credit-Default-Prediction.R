@@ -1,3 +1,8 @@
+###########################################
+# Classification using Decision Trees     #
+# Machine Learning with R by Brett Lantz  #
+###########################################
+
 install.packages("C50")
 install.packages("gmodels")
 install.packages("ISLR")
