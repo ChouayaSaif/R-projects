@@ -4,10 +4,8 @@
 # a simple credit approval model using C5.0 decision trees #
 ############################################################
 
-# 1: Load dataset
 wbcd <- read.csv("data.csv", stringsAsFactors = FALSE)
 
-# 2: Explore and prepare dataset
 str(wbcd)
 # Remove the ID column
 wbcd <- wbcd[-1]
@@ -92,7 +90,6 @@ for (k in k_values) {
   total_incorrect <- false_negatives + false_positives
   percent_incorrect <- (total_incorrect / length(wbcd_test_labels)) * 100
   
-  # Store the results
   results <- rbind(results, data.frame(
     k = k,
     false_negatives = false_negatives,
