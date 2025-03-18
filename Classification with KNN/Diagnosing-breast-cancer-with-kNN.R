@@ -66,7 +66,7 @@ CrossTable(x = wbcd_test_labels, y = wbcd_test_pred,
 # Define a range of k values to test
 k_values <- c(1, 5, 11, 15, 21, 27)
 
-# Initialize a data frame to store results
+
 results <- data.frame(
   k = integer(),
   false_negatives = integer(),
