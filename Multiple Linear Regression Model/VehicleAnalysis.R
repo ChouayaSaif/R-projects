@@ -34,9 +34,7 @@ anova(reduced, full)
 
 # Model Diagnostics
 par(mfrow=c(2,2))
-plot(model)
-vehicle[1620,]
+plot(optimal_model)
 
-# Prediction
-pred <- predict(model, testing)
-predict(model, data.frame(lh=10))
+# Prediction)
+predict(optimal_model, data.frame(lh=10), interval='confidence')
