@@ -95,14 +95,8 @@ hist(model$residuals,
 lines(density(model$residuals))
 
 
-
-
-
-
-
-
-
-
-
-
-
+# Forecast
+f <- forecast(model, 48)
+library(ggplot2)
+autoplot(f)
+accuracy(f)

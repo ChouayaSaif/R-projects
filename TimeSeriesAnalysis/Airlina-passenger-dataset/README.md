@@ -25,3 +25,10 @@ residual plot
 ![alt text](image-8.png)
 
 
+forecast
+![alt text](image-9.png)
+
+accuracy of forecast
+![alt text](image-10.png)
+
+
