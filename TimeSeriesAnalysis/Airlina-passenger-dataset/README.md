@@ -15,3 +15,13 @@ Decomposing time series
 
 best arima model 
 ![alt text](image-5.png)
+
+acf
+![alt text](image-6.png)
+pacf
+![alt text](image-7.png)
+
+residual plot
+![alt text](image-8.png)
+
+

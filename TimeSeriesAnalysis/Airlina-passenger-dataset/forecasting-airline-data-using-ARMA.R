@@ -75,3 +75,34 @@ model <- auto.arima(AP)
 print(model)
 attributes(model)
 model$coef
+
+
+# ACF and PACF plots
+acf(model$residuals, main = 'Correlogram')
+pacf(model$residuals, main = 'Partial Correlogram' )
+
+# Ljung-Box test 
+Box.test(model$residuals, lag=20, type = 'Ljung-Box')
+# --> p-value not significant: little chance that autocorrelation at lag 20 is statistically significant
+
+
+# Residual plot
+hist(model$residuals,
+     col = 'red',
+     xlab = 'Error',
+     main = 'Histogram of Residuals',
+     freq = FALSE)
+lines(density(model$residuals))
+
+
+
+
+
+
+
+
+
+
+
+
+
