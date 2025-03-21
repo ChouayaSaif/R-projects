@@ -1,10 +1,11 @@
-# Load the dataset
 data("AirPassengers")
-# View the dataset
 print(AirPassengers)
 # Plot the time series
 plot(AirPassengers, main = "Monthly Airline Passengers (1949-1960)",
      xlab = "Time", ylab = "Passengers", col = "blue")
+
+str(AirPassengers)
+
 
 # Install and load the 'tseries' package for the ADF test
 install.packages("tseries")
