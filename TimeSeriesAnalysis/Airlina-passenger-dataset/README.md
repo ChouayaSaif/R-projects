@@ -11,3 +11,7 @@ after log transformation --> fluctuations decresed
 Decomposing time series
 ![alt text](image-4.png)
 ![alt text](image-3.png)
+
+
+best arima model 
+![alt text](image-5.png)
