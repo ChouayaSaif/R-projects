@@ -58,10 +58,16 @@ n5 <- neuralnet(admit~gre+gpa+rank,
                data = training,
                hidden = 5,
                err.fct = "ce",
-               linear.output = FALSE)
-plot(n5)
+               linear.output = FALSE,
+               lidesign = 'full',
+               rep = 5, # run many repititions
+               algorithm = 'rprop+', # default algo used
+               stepmax = 100000) # default used
+#plot(n5)
+# first repititions is the best: has less error
+plot(n5, rep=1)
 
-output <- compute(n5, training[,-1])
+output <- compute(n5, training[,-1], rep=1)
 p11 <- output$net.result
 pred11 <- ifelse(p11>0.5, 1, 0)
 tab11 <- table(pred11, training$admit)
@@ -69,7 +75,7 @@ tab11
 1-sum(diag(tab11))/sum(tab11)
 
 
-output <- compute(n5, testing[,-1])
+output <- compute(n5, testing[,-1], rep=1)
 p22 <- output$net.result
 pred22 <- ifelse(p22>0.5, 1, 0)
 tab22 <- table(pred22, testing$admit)
@@ -103,5 +109,26 @@ tab88
 1-sum(diag(tab88))/sum(tab88)
 
 
+# Neural Network with 2 hidden layers
+n <- neuralnet(admit~gre+gpa+rank,
+               data = training,
+               hidden = c(2,1),
+               err.fct = "ce",
+               linear.output = FALSE)
+plot(n)
 
+# Confusion Matrix & Misclassification Error - training data
+output <- compute(n, training[,-1])
+p1 <- output$net.result
+pred1 <- ifelse(p1>0.5, 1, 0)
+tab1 <- table(pred1, training$admit)
+tab1
+1-sum(diag(tab1))/sum(tab1)
 
+# Confusion Matrix & Misclassification Error - testing data
+output <- compute(n, testing[,-1])
+p2 <- output$net.result
+pred2 <- ifelse(p2>0.5, 1, 0)
+tab2 <- table(pred2, testing$admit)
+tab2
+1-sum(diag(tab2))/sum(tab2)

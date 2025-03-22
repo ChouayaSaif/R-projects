@@ -15,3 +15,8 @@ accuracy on training set
 
 accuracy on testing set
 ![alt text](image-4.png)
+
+
+model with 2 hidden layers
+![alt text](image-5.png)
+
