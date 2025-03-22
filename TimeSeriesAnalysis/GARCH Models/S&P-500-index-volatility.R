@@ -6,18 +6,18 @@ install.packages("quantmod")
 library(rugarch)
 library(quantmod)
 
-# Load financial data (e.g., S&P 500 index)
+# Load financial data (S&P 500 index)
 getSymbols("^GSPC", from="2010-01-01", to="2023-01-01")
 returns <- na.omit(diff(log(Cl(GSPC))))  # Calculate log returns
 
 # Plot the returns
 plot(returns, main="S&P 500 Daily Log Returns", col="blue")
 
-# Define the GARCH(1,1) model
+# Define the GARCH(1,1) model:  a standard GARCH model
 garch_spec <- ugarchspec(
   variance.model = list(model="sGARCH", garchOrder=c(1,1)),  # GARCH(1,1) model
   mean.model = list(armaOrder=c(0,0)),  # No ARMA component in the mean
-  distribution.model = "std"  # Student's t-distribution for residuals
+  distribution.model = "std"  # the residuals follow a Student's t-distribution,
 )
 
 garch_spec
@@ -35,4 +35,3 @@ garch_forecast <- ugarchforecast(garch_fit, n.ahead=10)
 print(garch_forecast)
 
 plot(garch_forecast)
-
