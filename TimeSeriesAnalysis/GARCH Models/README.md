@@ -30,3 +30,8 @@ To run the R script, you need the following:
   ```R
   install.packages("rugarch")
   install.packages("quantmod")
+
+
+![alt text](image.png)
+
+
