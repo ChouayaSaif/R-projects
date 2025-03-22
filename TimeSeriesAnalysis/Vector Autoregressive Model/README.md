@@ -54,6 +54,9 @@ To run the R script, you need the following:
   install.packages("ggplot2")
 
 
+![alt text](image-3.png)
+
+
 ![alt text](image.png)
 
 
