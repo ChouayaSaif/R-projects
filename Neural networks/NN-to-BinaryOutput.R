@@ -16,3 +16,13 @@ set.seed(222)
 ind <- sample(2, nrow(data), replace = TRUE, prob = c(0.7, 0.3))
 training <- data[ind==1,]
 testing <- data[ind==2,]
+
+# Neural Networks
+library(neuralnet)
+set.seed(333)
+n <- neuralnet(admit~gre+gpa+rank,
+               data = training,
+               hidden = 5,
+               err.fct = "ce",
+               linear.output = FALSE)
+plot(n)
