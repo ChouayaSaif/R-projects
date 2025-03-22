@@ -10,8 +10,6 @@ head(AP)
 ts(AP, frequency = 12, start=c(1949,1))
 attributes(AP)
 
-
-# Plot the time series
 plot(AP, main = "Monthly Airline Passengers (1949-1960)",
      xlab = "Time", ylab = "Passengers", col = "blue")
 
