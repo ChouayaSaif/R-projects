@@ -1,4 +1,4 @@
-# Neural Network for Graduate School Admissions Prediction
+# Neural Network for Graduate School Admissions
 
 This repository contains an R script that builds and evaluates **Neural Network** models to predict graduate school admissions based on features such as GRE score, GPA, and university rank. The project demonstrates how to preprocess data, build neural networks with different architectures, and evaluate their performance using confusion matrices and misclassification error.
 
