@@ -12,7 +12,6 @@ The dataset used in this project is `binary.csv`, which contains the following c
 - **gpa**: Grade Point Average.
 - **rank**: Prestige rank of the undergraduate institution (1 = highest, 4 = lowest).
 
-dataset
 ```R
 data <- read.csv('https://raw.githubusercontent.com/bkrai/R-files-from-YouTube/main/binary.csv')
 
