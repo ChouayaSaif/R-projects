@@ -10,7 +10,7 @@ The dataset used in this project is `binary.csv`, which contains the following c
 - **admit**: Binary target variable (1 = admitted, 0 = not admitted).
 - **gre**: Graduate Record Examination score.
 - **gpa**: Grade Point Average.
-- **rank**: Prestige rank of the undergraduate institution (1 = highest, 4 = lowest).
+- **rank**: Prestige rank of the undergraduate institution (1 = highest, 4 = lowest ).
 
 ```R
 data <- read.csv('https://raw.githubusercontent.com/bkrai/R-files-from-YouTube/main/binary.csv')
