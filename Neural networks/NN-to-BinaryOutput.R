@@ -1,7 +1,7 @@
 data <- read.csv('https://raw.githubusercontent.com/bkrai/R-files-from-YouTube/main/binary.csv')
 str(data)
 
-# Min-Max Normalization
+# MinMax Normalization
 data$gre <- (data$gre - min(data$gre))/(max(data$gre) - min(data$gre))
 data$gpa <- (data$gpa - min(data$gpa))/(max(data$gpa) - min(data$gpa))
 data$rank <- (data$rank - min(data$rank))/(max(data$rank)-min(data$rank))
